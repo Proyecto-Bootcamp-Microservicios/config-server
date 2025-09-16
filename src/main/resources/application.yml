@@ -1,0 +1,33 @@
+server:
+  port: 8888
+
+spring:
+  application:
+    name: config-server
+  profiles:
+    active: git
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/Proyecto-Bootcamp-Microservicios/bank-config
+          default-label: main
+          search-paths: config
+          clone-on-start: true
+          timeout: 10
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info, metrics, refresh, busrefresh
+  endpoint:
+    health:
+      show-details: always
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_SERVER_URL:http://localhost:8761/eureka/}
+    register-with-eureka: true
+    fetch-registry: true
